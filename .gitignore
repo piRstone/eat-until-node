@@ -1,0 +1,8 @@
+# Folders
+/build
+node_modules
+
+# Files
+.eslintcache
+.env
+yarn-error.log
