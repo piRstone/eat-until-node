@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { v4 as uuid } from 'uuid';
 
 import { User } from '../models/User';
+import createUser from '../utils/mails/createUser';
 
 const router = Router();
 
@@ -14,13 +15,18 @@ router.post('/register', async (req, res, next) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 8);
+    const token = uuid();
 
     try {
         const user = await User.create({
             email,
             password: passwordHash,
-            signupToken: uuid(),
+            signupToken: token,
         });
+
+        const mailStatus = await createUser(email, token);
+
+        console.log(mailStatus);
 
         return res.status(201).json(user);
     } catch (e) {
