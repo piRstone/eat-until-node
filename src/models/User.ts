@@ -42,6 +42,11 @@ export class User extends Model<User> {
     @Column(DataType.BOOLEAN)
     isAdmin: boolean;
 
+    @AllowNull(false)
+    @Default(false)
+    @Column(DataType.BOOLEAN)
+    isActive: boolean;
+
     @Column(DataType.STRING)
     public refreshToken: string | null;
 

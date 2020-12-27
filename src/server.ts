@@ -24,7 +24,7 @@ app.use(
         path: [
             '/api/register',
             '/api/login',
-            RegExp('/files/.*'),
+            '/api/activate',
         ],
     }),
 );
