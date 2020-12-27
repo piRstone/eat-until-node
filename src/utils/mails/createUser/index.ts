@@ -6,7 +6,7 @@ const createUser = (email: string, token: string) => {
         .request({
             Messages: [{
                 From: {
-                    Email: 'eatuntil@pirstone.com',
+                    Email: process.env.SENDER_EMAIL,
                     Name: 'Eat Until'
                 },
                 HTMLPart: `
