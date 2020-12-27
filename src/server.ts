@@ -25,6 +25,8 @@ app.use(
             '/api/register',
             '/api/login',
             '/api/activate',
+            '/api/forgot-password',
+            '/api/reset-password',
         ],
     }),
 );

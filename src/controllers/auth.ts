@@ -7,6 +7,7 @@ import { v4 as uuid } from 'uuid';
 
 import { User } from '../models/User';
 import createUser from '../utils/mails/createUser';
+import forgotPassword from '../utils/mails/forgotPassword';
 import { getSafeUser } from '../utils/user';
 
 const router = Router();
@@ -90,11 +91,43 @@ router.get('/activate', async (req, res, next) => {
         user.isActive = true;
         await user.save();
 
-        return res.status(200);
+        return res.json({ ok: true });
     } catch(e) {
         return next(e);
     }
 
+});
+
+router.post('/forgot-password', async (req, res, next) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Missing email' });
+    }
+
+    try {
+        const user = await User.findOne({ where: { email } });
+
+        if (!user) {
+            // Don't tell an error occured to prevent information disclosure
+            return res.json({ ok: true });
+        }
+
+        const signupToken = uuid();
+
+        await User.update({
+            signupToken,
+        }, {
+            where: { email }
+        });
+
+        // Send forgot password email
+        await forgotPassword(email, signupToken);
+
+        return res.status(200).json({ ok: true });
+    } catch (e) {
+        return next(e);
+    }
 });
 
 export default router;
