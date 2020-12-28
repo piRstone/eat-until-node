@@ -91,7 +91,7 @@ router.get('/activate', async (req, res, next) => {
         user.isActive = true;
         await user.save();
 
-        return res.json({ ok: true });
+        return res.sendStatus(200);
     } catch(e) {
         return next(e);
     }
@@ -110,7 +110,7 @@ router.post('/forgot-password', async (req, res, next) => {
 
         if (!user) {
             // Don't tell an error occured to prevent information disclosure
-            return res.json({ ok: true });
+            return res.sendStatus(200);
         }
 
         const signupToken = uuid();
@@ -124,7 +124,7 @@ router.post('/forgot-password', async (req, res, next) => {
         // Send forgot password email
         await forgotPassword(email, signupToken);
 
-        return res.status(200).json({ ok: true });
+        return res.sendStatus(200);
     } catch (e) {
         return next(e);
     }
