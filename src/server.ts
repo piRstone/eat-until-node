@@ -8,6 +8,7 @@ import jwt from 'express-jwt';
 import path from 'path';
 
 import routes from './routes';
+import templatesRoutes from './templatesRoutes';
 
 const PORT = process.env.PORT || 8001;
 
@@ -36,6 +37,7 @@ app.use(
     }).unless({
         path: [
             '/',
+            '/activate',
             '/api/register',
             '/api/login',
             '/api/activate',
@@ -46,9 +48,7 @@ app.use(
 );
 
 app.use('/api', routes);
-app.get('/', (_, res) => {
-    res.render('home');
-});
+app.use(templatesRoutes);
 
 app.listen(process.env.PORT || 8001, () => {
     console.log(`server started on port ${PORT}`);
