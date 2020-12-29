@@ -20,6 +20,9 @@
       ],
       "@utils/*": [
         "./utils/*"
+      ],
+      "@views/*": [
+        "./views/*"
       ]
     },
     "pretty": true,
@@ -34,6 +37,7 @@
     "node_modules"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.hbs"
   ]
 }

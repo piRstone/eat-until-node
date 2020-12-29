@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start-server": "tsc && node build/server.js",
+    "start-server": "npm run build && node build/server.js",
     "start": "nodemon --delay 1000ms -e ts -w ./ -x npm run start-server",
-    "build": "tsc",
+    "build": "tsc && cp -R src/views build && cp -R src/public build",
     "sequelize": "tsc && node ./build/scripts/createJsonConfig.js && sequelize",
     "lint:js": "eslint . --ext ts --ext tsx --cache --cache-location '.eslintcache'",
     "lint:js:fix": "eslint './**/*.{js,ts,tsx}' --fix"
@@ -28,6 +28,7 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
     "express-jwt": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "node-mailjet": "^3.3.1",
