@@ -26,16 +26,16 @@ export class Product extends Model<Product> {
 
     @AllowNull(false)
     @Column(DataType.DATE)
-    expiration_date: Date;
+    expirationDate: Date;
 
     @Column(DataType.INTEGER)
-    notification_delay: number;
+    notificationDelay: number;
 
     @Column(DataType.STRING)
     ean13: string;
 
     @Column(DataType.DATE)
-    notification_date: Date;
+    notificationDate: Date;
 
     @ForeignKey(() => Inventory)
     @PrimaryKey
