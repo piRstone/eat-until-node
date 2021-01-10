@@ -44,6 +44,7 @@
     "@thetribe/eslint-config": "^0.4.2",
     "@thetribe/eslint-config-react": "^0.4.2",
     "@types/bluebird": "^3.5.33",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.16",
     "@types/node-mailjet": "^3.3.4",
     "@types/uuid": "^8.3.0",
