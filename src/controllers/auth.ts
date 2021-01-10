@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { addDays } from 'date-fns';
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import randToken from 'rand-token';
 import { v4 as uuid } from 'uuid';
 
@@ -33,7 +33,7 @@ router.post('/register', async (req, res, next) => {
         // Send activation email
         await createUser(email, token);
 
-        return res.status(201);
+        return res.sendStatus(201);
     } catch (e) {
         return next(e);
     }
@@ -71,6 +71,30 @@ router.post('/login', async (req, res) => {
         token,
         user: safeUser,
     });
+});
+
+router.post('/check-token', async (req, res, next) => {
+    const { token } = req.body;
+
+    if (!token) {
+        return res.sendStatus(400);
+    }
+
+    try {
+        jwt.verify(token, process.env.JWT_SECRET);
+
+        return res.sendStatus(200);
+    } catch (e) {
+        if (e instanceof TokenExpiredError) {
+            return res.status(401).json({ error: e.message });
+        }
+        return next(e);
+    }
+});
+
+router.post('/refresh-token', async (_, res) => {
+    // TODO
+    return res.sendStatus(200);
 });
 
 router.get('/activate', async (req, res, next) => {

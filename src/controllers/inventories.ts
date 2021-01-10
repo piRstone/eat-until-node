@@ -107,4 +107,27 @@ router.get('/:id/products', async (req, res, next) => {
     }
 });
 
+router.post('/:id/clear-products', async (req, res, next) => {
+    const { user } = req.auth;
+    const { id } = req.params;
+
+    try {
+        const inventory = await Inventory.findOne({ where: { id } });
+
+        if (!inventory) {
+            return res.status(404).json({ error: 'Inventory not found' });
+        }
+
+        if (inventory.userId !== user.id) {
+            return res.sendStatus(401);
+        }
+
+        await Product.destroy({ where: { inventoryId: id } });
+
+        return res.sendStatus(200);
+    } catch (e) {
+        return next(e);
+    }
+});
+
 export default router;

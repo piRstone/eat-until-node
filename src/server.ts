@@ -43,6 +43,8 @@ app.use(
             '/api/activate',
             '/api/forgot-password',
             '/api/reset-password',
+            '/api/check-token',
+            '/api/refresh-token',
         ],
     }),
 );
