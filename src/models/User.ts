@@ -3,10 +3,14 @@ import {
     Column,
     DataType,
     Default,
+    HasMany,
     Model,
     PrimaryKey,
     Table,
 } from 'sequelize-typescript';
+
+import { Inventory } from './Inventory';
+import { Product } from './Product';
 
 @Table({ tableName: 'user' })
 export class User extends Model<User> {
@@ -52,6 +56,12 @@ export class User extends Model<User> {
 
     @Column(DataType.DATE)
     public refreshTokenExpiry: Date | null;
+
+    @HasMany(() => Inventory)
+    inventories: Inventory[];
+
+    @HasMany(() => Product)
+    products: Product[];
 
     get fullName(): string {
         return `${this.getDataValue('firstName')} ${this.getDataValue('lastName')}`;
