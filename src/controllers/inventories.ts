@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { Inventory } from '../models/Inventory';
+import { Product } from '../models/Product';
 
 const router = Router();
 
@@ -78,6 +79,29 @@ router.delete('/:id', async (req, res, next) => {
         }
 
         return res.sendStatus(200)
+    } catch (e) {
+        return next(e);
+    }
+});
+
+router.get('/:id/products', async (req, res, next) => {
+    const { user } = req.auth;
+    const { id } = req.params;
+
+    try {
+        const inventory = await Inventory.findOne({ where: { id } });
+
+        if (!inventory) {
+            return res.status(404).json({ error: 'Inventory not found' });
+        }
+
+        if (inventory.userId !== user.id) {
+            return res.sendStatus(401);
+        }
+
+        const products = await Product.findAll({ where: { inventoryId: id } });
+
+        return res.status(200).json(products);
     } catch (e) {
         return next(e);
     }
