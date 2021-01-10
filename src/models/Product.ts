@@ -4,6 +4,7 @@ import {
     Column,
     DataType,
     Default,
+    ForeignKey,
     Model,
     PrimaryKey,
     Table,
@@ -36,9 +37,21 @@ export class Product extends Model<Product> {
     @Column(DataType.DATE)
     notification_date: Date;
 
+    @ForeignKey(() => Inventory)
+    @PrimaryKey
+    @Column
+    inventoryId: string;
+
+    @ForeignKey(() => User)
+    @PrimaryKey
+    @Column(DataType.UUID)
+    userId: string;
+
     @BelongsTo(() => Inventory)
     inventory: Inventory;
 
     @BelongsTo(() => User)
     user: User;
 }
+
+export default Product;

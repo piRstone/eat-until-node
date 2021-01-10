@@ -4,6 +4,7 @@ import {
     Column,
     DataType,
     Default,
+    ForeignKey,
     HasMany,
     Model,
     PrimaryKey,
@@ -24,9 +25,16 @@ export class Inventory extends Model<Inventory> {
     @Column(DataType.STRING)
     name: string;
 
-    @BelongsTo(() => User)
-    user: User;
-
     @HasMany(() => Product)
     products: Product[];
+
+    @ForeignKey(() => User)
+    @PrimaryKey
+    @Column(DataType.UUID)
+    userId: string;
+
+    @BelongsTo(() => User)
+    user: User;
 }
+
+export default Inventory;
