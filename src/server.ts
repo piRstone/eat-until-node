@@ -21,6 +21,11 @@ app.use(express.json());
 // Declare statics folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// To get web form data
+app.use(express.urlencoded({
+    extended: true
+}));
+
 // Set Handlebars as template engine
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', exphbs({
@@ -37,6 +42,8 @@ app.use(
     }).unless({
         path: [
             '/',
+            '/reset-password',
+            '/confirm-password',
             '/activate',
             '/api/register',
             '/api/login',
