@@ -10,7 +10,8 @@ export const up = async (queryInterface, Sequelize) => {
         },
         inventory_id: {
             allowNull: false,
-            primaryKey: true,
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
             references: {
                 key: 'id',
                 model: 'inventory',

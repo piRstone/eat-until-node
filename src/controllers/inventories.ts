@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { Sequelize } from 'sequelize';
 
 import { Inventory } from '../models/Inventory';
 import { Product } from '../models/Product';
@@ -9,7 +10,17 @@ router.get('/', async (req, res, next) => {
     const { user } = req.auth;
 
     try {
-        const inventories = await Inventory.findAll({ where: { userId: user.id } });
+        const inventories = await Inventory.findAll({
+            attributes: {
+                include: [[Sequelize.fn('COUNT', Sequelize.col('products.id')), 'productsCount']],
+            },
+            group: ['Inventory.id'],
+            include: [{
+                attributes: [],
+                model: Product,
+            }],
+            where: { userId: user.id }
+        });
 
         return res.status(200).json(inventories);
     } catch (e) {
