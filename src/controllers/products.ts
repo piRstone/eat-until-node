@@ -94,7 +94,7 @@ router.patch('/:id', async (req, res, next) => {
         product.notificationDate = notificationDate;
         product.save();
 
-        return res.status(200).json({ error: product });
+        return res.status(200).json(product);
     } catch (e) {
         return next(e);
     }
