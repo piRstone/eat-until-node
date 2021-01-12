@@ -6,7 +6,7 @@
   "scripts": {
     "start-server": "npm run build && node build/server.js",
     "start": "nodemon --delay 1000ms -e ts -w ./ -x npm run start-server",
-    "build": "tsc && cp -R src/views build && cp -R src/public build",
+    "build": "tsc && cp -R src/views build && cp -R src/public build && cp -R src/locales build",
     "sequelize": "tsc && node ./build/scripts/createJsonConfig.js && sequelize",
     "lint:js": "eslint . --ext ts --ext tsx --cache --cache-location '.eslintcache'",
     "lint:js:fix": "eslint './**/*.{js,ts,tsx}' --fix"
@@ -30,6 +30,9 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
     "express-jwt": "^6.0.0",
+    "i18next": "^19.8.4",
+    "i18next-http-middleware": "^3.1.0",
+    "i18next-node-fs-backend": "^2.1.3",
     "jsonwebtoken": "^8.5.1",
     "node-mailjet": "^3.3.1",
     "pg": "^8.5.1",

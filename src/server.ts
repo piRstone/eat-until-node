@@ -5,6 +5,9 @@ import cors from 'cors';
 import express from 'express';
 import exphbs from 'express-handlebars';
 import jwt from 'express-jwt';
+import i18next from 'i18next';
+import i18nextMiddleware from 'i18next-http-middleware';
+import FileSystemBackend from 'i18next-node-fs-backend';
 import path from 'path';
 
 import routes from './routes';
@@ -26,11 +29,29 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+// Setup i18n
+i18next
+    .use(i18nextMiddleware.LanguageDetector)
+    .use(FileSystemBackend)
+    .init({
+        backend: {
+            loadPath: path.join(__dirname, 'locales/{{lng}}.json'),
+        },
+        preload: ['fr', 'en']
+    });
+
+app.use(i18nextMiddleware.handle(i18next));
+
 // Set Handlebars as template engine
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
+    helpers: {
+        t: function() {
+            return i18next.t.apply(this, arguments);
+        }
+    }
 }));
 app.set('view engine', 'hbs');
 
@@ -56,6 +77,7 @@ app.use(
     }),
 );
 
+// Routes
 app.use('/api', routes);
 app.use(templatesRoutes);
 
