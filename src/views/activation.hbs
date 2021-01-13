@@ -1,12 +1,12 @@
 <div class="col-12 col-md-6 mx-auto my-4 text-center">
     {{#if activated}}
-        <h2>Your account has been successfully activated.</h2>
-        <p>You can now get back to Eat Until to log you in.</p>
+        <h2>{{t "activation.title"}}</h2>
+        <p>{{t "activation.success"}}</p>
         <div class="text-center d-sm-none">
-            <a class="btn btn-success" href="eatuntil://">Open Eat Until</a>
+            <a class="btn btn-success" href="eatuntil://">{{t "activation.open"}}</a>
         </div>
     {{else}}
-        <h2>Activation failed</h2>
+        <h2>{{t "activation.activationFailed"}}</h2>
         <p>{{error}}</p>
     {{/if}}
 </div>
