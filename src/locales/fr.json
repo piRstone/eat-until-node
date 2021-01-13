@@ -1,3 +1,23 @@
 {
-    "test": "Test concluant"
+    "home": {
+        "title": "Bienvenue sur Eat Until"
+    },
+    "activation": {
+        "title": "Votre compte a bien été activé.",
+        "success": "Vous pouvez retourner sur l'application pour vous connecter.",
+        "open": "Ouvrir Eat Until",
+        "activationFailed": "L'activation a échoué",
+        "invalidLink": "Lien invalide"
+    },
+    "resetPassword": {
+        "wrongToken": "Le lien de réinitialisation du mot de passe est invalide, peut-être parce qu'il a déjà été utilisé ou parce qu'il a expiré. Veuillez refaire une demande de réinitialisation.",
+        "explanation": "Veuillez entrer votre nouveau mot de passe. En cas d'erreur, refaites une demande de réinitialisation :)",
+        "newPassword": "Nouveau mot de passe :",
+        "changePassword": "Changer mon mot de passe"
+    },
+    "passwordConfirm": {
+        "success": "Votre mot de passe a été changé. Vous pouvez désormais vous connecter.",
+        "goToApp": "Aller sur l'application",
+        "error": "Une erreur s'est produite. Veuillez refaire une demande de réinitialisation du mot de passe depuis l'application."
+    }
 }

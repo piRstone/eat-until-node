@@ -1,6 +1,11 @@
 import mailjet from '../../mailjet';
 
 const createUser = (email: string, token: string) => {
+    const baseURL = process.env.NODE_ENV === 'development'
+        ? process.env.LOCAL_URL
+        : process.env.APP_URL;
+    const link = `${baseURL}/activate?token=${token}`
+
     return mailjet
         .post('send', {'version': 'v3.1'})
         .request({
@@ -10,21 +15,21 @@ const createUser = (email: string, token: string) => {
                     Name: 'Eat Until'
                 },
                 HTMLPart: `
-                    <h1>Welcome to Eat Until!</h1>
-                    <p>Your account has been successfully created!</p>
-                    <p>Activate it by clicking the link below</p>
-                    <a href="https://eatuntil.pirstone.com/activate?token=${token}">
-                        https://eatuntil.pirstone.com/activate?token=${token}
+                    <h1>Bienvenue sur Eat Until !</h1>
+                    <p>Votre compte vient d'être créé.</p>
+                    <p>Activez-le en cliquant sur le lien ci-dessous</p>
+                    <a href="${link}">
+                        ${link}
                     </a>
                 `,
-                Subject: 'Account activation',
+                Subject: 'Activation du compte - Eat Until',
                 TextPart: `
-                    Welcome to Eat Until!
+                    Bienvenue sur Eat Until !
 
-                    Your account has been successfully created!
-                    Activate it by clicking the link below:
+                    Votre compte vient d'être créé.
+                    Activez-le en cliquant sur le lien ci-dessous :
 
-                    https://eatuntil.pirstone.com/activate?token=${token}
+                    ${link}
                 `,
                 To: [{
                     Email: process.env.NODE_ENV === 'development' ? 'list@lavalley.fr' : email

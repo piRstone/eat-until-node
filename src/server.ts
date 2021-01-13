@@ -48,9 +48,10 @@ app.engine('hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
     helpers: {
-        t: function() {
-            return i18next.t.apply(this, arguments);
-        }
+        t: function(key: string, param?: string) {
+            const options = param ? { param } : undefined;
+            return this.t(key, options);
+        },
     }
 }));
 app.set('view engine', 'hbs');

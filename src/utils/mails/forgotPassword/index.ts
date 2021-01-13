@@ -1,6 +1,10 @@
 import mailjet from '../../mailjet';
 
 const forgotPassword = (email: string, token: string) => {
+    const baseURL = process.env.NODE_ENV === 'development'
+        ? process.env.LOCAL_URL
+        : process.env.APP_URL;
+    const link = `${baseURL}/reset-password?token=${token}`
     return mailjet
         .post('send', {'version': 'v3.1'})
         .request({
@@ -11,18 +15,18 @@ const forgotPassword = (email: string, token: string) => {
                 },
                 HTMLPart: `
                     <h1>Eat Until</h1>
-                    <p>To set a new password clic the link below</p>
-                    <a href="https://eatuntil.pirstone.com/reset-password?token=${token}">
-                        https://eatuntil.pirstone.com/reset-password?token=${token}
+                    <p>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</p>
+                    <a href="${link}">
+                        ${link}
                     </a>
                 `,
-                Subject: 'Password reset',
+                Subject: 'Réinitialisation de mot de passe - Eat Until',
                 TextPart: `
                     Eat Until
 
-                    To set a new password clic the link below
+                    Cliquez sur le lien ci-dessous pour changer votre mot de passe :
 
-                    https://eatuntil.pirstone.com/reset-password?token=${token}
+                    ${link}
                 `,
                 To: [{
                     Email: process.env.NODE_ENV === 'development' ? 'list@lavalley.fr' : email
