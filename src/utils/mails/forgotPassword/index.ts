@@ -1,3 +1,7 @@
+import fs from 'fs';
+import Handlebars from 'handlebars';
+import path from 'path';
+
 import mailjet from '../../mailjet';
 
 const forgotPassword = (email: string, token: string) => {
@@ -5,6 +9,12 @@ const forgotPassword = (email: string, token: string) => {
         ? process.env.LOCAL_URL
         : process.env.APP_URL;
     const link = `${baseURL}/reset-password?token=${token}`
+
+    const logoPath = path.join(__dirname, '../../../public/img/logo-full.png');
+
+    const source = fs.readFileSync(path.join(__dirname, '../../../views/mails/forgotPassword.hbs'), 'utf8');
+    const template = Handlebars.compile(source);
+
     return mailjet
         .post('send', {'version': 'v3.1'})
         .request({
@@ -13,13 +23,7 @@ const forgotPassword = (email: string, token: string) => {
                     Email: process.env.SENDER_EMAIL,
                     Name: 'Eat Until'
                 },
-                HTMLPart: `
-                    <h1>Eat Until</h1>
-                    <p>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</p>
-                    <a href="${link}">
-                        ${link}
-                    </a>
-                `,
+                HTMLPart: template({ logo: logoPath, reset_password_link: link }),
                 Subject: 'Réinitialisation de mot de passe - Eat Until',
                 TextPart: `
                     Eat Until
