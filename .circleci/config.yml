@@ -17,6 +17,18 @@ commands:
             - node_modules
 
 jobs:
+  yarn-install:
+    docker:
+      - image: circleci/node:12.18.3
+    working_directory: ~/project/app
+    steps:
+      - checkout:
+          path: ~/project
+      - yarn_install
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - app/node_modules
   lint:
     docker:
       - image: circleci/node:12.18.3
