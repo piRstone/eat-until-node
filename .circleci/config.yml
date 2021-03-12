@@ -7,14 +7,20 @@ jobs:
   yarn-install:
     docker:
       - image: cimg/node:15.1
+    working_directory: /tmp/workspace
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - node_modules
 
   lint:
     docker:
       - image: cimg/node:15.1
+    working_directory: /tmp/workspace
     steps:
       - checkout
       - run:
@@ -24,6 +30,7 @@ jobs:
   build:
     docker:
       - image: cimg/node:15.1
+    working_directory: /tmp/workspace
     steps:
       - checkout
       - run:
