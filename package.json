@@ -10,7 +10,8 @@
     "sequelize": "tsc && node ./build/scripts/createJsonConfig.js && sequelize",
     "notify": "node ./build/scripts/notifyExpiredProducts.js",
     "lint:js": "eslint . --ext ts --ext tsx --cache --cache-location '.eslintcache'",
-    "lint:js:fix": "eslint './**/*.{js,ts,tsx}' --fix"
+    "lint:js:fix": "eslint './**/*.{js,ts,tsx}' --fix",
+    "type-check": "tsc --noEmit --project tsconfig.json"
   },
   "repository": {
     "type": "git",
