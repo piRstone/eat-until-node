@@ -25,6 +25,8 @@ jobs:
     steps:
       - checkout:
           path: /tmp/workspace
+      - attach_workspace:
+          at: /tmp/workspace 
       - run:
           name: Run lint
           command: yarn lint:js
@@ -34,7 +36,10 @@ jobs:
       - image: cimg/node:15.1
     working_directory: /tmp/workspace
     steps:
-      - checkout
+      - checkout:
+          path: /tmp/workspace
+      - attach_workspace:
+          at: /tmp/workspace 
       - run:
           name: Run build
           command: yarn build
