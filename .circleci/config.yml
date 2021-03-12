@@ -29,4 +29,6 @@ workflows:
   build:
     jobs:
       - lint
-      - build
+      - build:
+        requires:
+          - lint
