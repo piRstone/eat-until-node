@@ -9,7 +9,8 @@ jobs:
       - image: cimg/node:15.1
     working_directory: /tmp/workspace
     steps:
-      - checkout
+      - checkout:
+          path: /tmp/workspace
       - node/install-packages:
           pkg-manager: yarn
       - persist_to_workspace:
@@ -22,7 +23,8 @@ jobs:
       - image: cimg/node:15.1
     working_directory: /tmp/workspace
     steps:
-      - checkout
+      - checkout:
+          path: /tmp/workspace
       - run:
           name: Run lint
           command: yarn lint:js
