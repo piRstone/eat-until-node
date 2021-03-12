@@ -4,14 +4,19 @@ orbs:
   node: circleci/node@4.1
 
 jobs:
-
-  lint:
+  yarn-install:
     docker:
       - image: cimg/node:15.1
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
+
+  lint:
+    docker:
+      - image: cimg/node:15.1
+    steps:
+      - checkout
       - run:
           name: Run lint
           command: yarn lint:js
@@ -22,13 +27,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run lint
+          name: Run build
           command: yarn build
 
 workflows:
   build:
     jobs:
-      - lint
+      - yarn-install
+      - lint:
+          requires:
+          - yarn-install
       - build:
           requires:
           - lint
