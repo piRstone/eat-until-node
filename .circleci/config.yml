@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
+  heroku: circleci/heroku@0.0.10
 
 jobs:
   yarn-install:
@@ -54,3 +55,7 @@ workflows:
       - build:
           requires:
           - lint
+  
+  heroku_deploy:
+    jobs:
+      - heroku/deploy-via-git
