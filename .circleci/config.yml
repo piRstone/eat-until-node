@@ -61,4 +61,4 @@ workflows:
       - heroku/deploy-via-git:
         filters:
           branchs:
-          - ci-config
+          - master
