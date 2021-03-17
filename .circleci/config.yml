@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
-  heroku: circleci/heroku@0.0.10
+  heroku: circleci/heroku@1.2.5
 
 jobs:
   yarn-install:
@@ -27,7 +27,7 @@ jobs:
       - checkout:
           path: /tmp/workspace
       - attach_workspace:
-          at: /tmp/workspace 
+          at: /tmp/workspace
       - run:
           name: Run lint
           command: yarn lint:js
@@ -40,7 +40,7 @@ jobs:
       - checkout:
           path: /tmp/workspace
       - attach_workspace:
-          at: /tmp/workspace 
+          at: /tmp/workspace
       - run:
           name: Run build
           command: yarn build
@@ -55,7 +55,8 @@ workflows:
       - build:
           requires:
           - lint
-  
+
   heroku_deploy:
     jobs:
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
+        branch: ci-config
