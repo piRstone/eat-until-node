@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && node build/server.js",
+    "start": "node build/server.js",
     "dev": "nodemon --delay 1000ms -e ts -w ./ -x npm run start-server",
     "build": "tsc && cp -R src/views build && cp -R src/public build && cp -R src/locales build",
     "sequelize": "tsc && node ./build/scripts/createJsonConfig.js && sequelize",
