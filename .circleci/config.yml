@@ -59,4 +59,6 @@ workflows:
   heroku_deploy:
     jobs:
       - heroku/deploy-via-git:
-        branch: ci-config
+        filters:
+          branchs:
+          - ci-config
